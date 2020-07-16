@@ -1,0 +1,57 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+</head>
+
+<body>
+
+<div>
+  <div>Markdown text</div>
+  <textarea
+          name="markdown"
+          id="markdown"
+          cols="100"
+          rows="10"
+  ></textarea >
+</div>
+
+<br />
+
+<div>
+  <div>IMG tags</div>
+  <textarea
+          name="result"
+          id="result"
+          cols="100"
+          rows="10"
+  ></textarea >
+</div>
+
+  <script >
+    const source = document.getElementById('markdown');
+    const result = document.getElementById('result');
+
+    const convertToHTML = url => `<img src="${url}" width="400" />`
+
+    const inputHandler = function(e) {
+      const value = e.target.value
+      const match = value.match(/(https?:\/\/.*\.(?:png|jpg))/g)
+      if  (match.length) {
+        result.innerHTML = match.map(convertToHTML).join('\n');
+      }
+
+    }
+
+    source.addEventListener('input', inputHandler);
+  </script>
+
+</body>
+
+</html>
