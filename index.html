@@ -13,6 +13,10 @@
 <body>
 
 <div>
+  <div>
+    <label for="width">IMG tag Width</label >
+    <input id="width" type="number" value="400">
+  </div>
   <div>Markdown text</div>
   <textarea
           name="markdown"
@@ -35,21 +39,31 @@
 </div>
 
   <script >
+    let imgSize = 400
     const source = document.getElementById('markdown');
     const result = document.getElementById('result');
+    const width = document.getElementById('width');
+    const convertToHTML = url => `<img src="${url}" width=${imgSize} />`
+    let matchedText = ''
 
-    const convertToHTML = url => `<img src="${url}" width="400" />`
-
+    const replaceText = () => {
+      if (matchedText.length) {
+        result.innerHTML = matchedText.map(convertToHTML).join('\n');
+      }
+    }
     const inputHandler = function(e) {
       const value = e.target.value
-      const match = value.match(/(https?:\/\/.*\.(?:png|jpg))/g)
-      if  (match.length) {
-        result.innerHTML = match.map(convertToHTML).join('\n');
-      }
+      matchedText = value.match(/(https?:\/\/.*\.(?:png|jpg))/g)
+      replaceText()
+    }
 
+    const handleChangeWidth = function(e) {
+      imgSize = e.target.value
+      replaceText()
     }
 
     source.addEventListener('input', inputHandler);
+    width.addEventListener('input', handleChangeWidth);
   </script>
 
 </body>
