@@ -19,3 +19,4 @@ The only way to resize image is to convert it manually to HTML
 
 [This](https://headfire94.github.io/markdown-img-replacer/) tool helps to convert images to html tags
 
+![Alt text](./example.png?raw=true "Example")
