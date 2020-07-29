@@ -1,71 +1,80 @@
 <!doctype html>
-<html class="no-js" lang="">
+<html
+        class="no-js"
+        lang=""
+>
 
-<head>
+<head >
   <meta charset="utf-8">
-  <title></title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title ></title >
+  <meta
+          name="description"
+          content=""
+  >
+  <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1"
+  >
 
+</head >
 
-</head>
+<body >
 
-<body>
-
-<div>
-  <div>
+<div >
+  <div >
     <label for="width">IMG tag Width</label >
-    <input id="width" type="number" value="400">
-  </div>
-  <div>Markdown text</div>
+    <input
+            id="width"
+            type="number"
+            value="400"
+    >
+  </div >
+  <div >Markdown text</div >
   <textarea
           name="markdown"
           id="markdown"
           cols="100"
           rows="10"
   ></textarea >
-</div>
+</div >
 
 <br />
 
-<div>
-  <div>IMG tags</div>
+<div >
+  <div >IMG tags</div >
   <textarea
           name="result"
           id="result"
           cols="100"
           rows="10"
   ></textarea >
-</div>
+</div >
 
-  <script >
-    let imgSize = 400
-    const source = document.getElementById('markdown');
-    const result = document.getElementById('result');
-    const width = document.getElementById('width');
-    const convertToHTML = url => `<img src="${url}" width=${imgSize} />`
-    let matchedText = ''
+<script >
+  let imgSize = 400
+  const source = document.getElementById('markdown')
+  const result = document.getElementById('result')
+  const width = document.getElementById('width')
+  const convertToHTML = url => `<img src="${url}" width=${imgSize} />`
 
-    const replaceText = () => {
-      if (matchedText.length) {
-        result.innerHTML = matchedText.map(convertToHTML).join('\n');
-      }
-    }
-    const inputHandler = function(e) {
-      const value = e.target.value
-      matchedText = value.match(/(https?:\/\/.*\.(?:png|jpg))/g)
-      replaceText()
-    }
+  const replaceText = (value) => {
+    result.innerHTML = value.replace(/(!\[[^\]]+\]\((https?:\/\/.*\.(?:png|jpg|svg|gif|webp))\))/g, ((match, p1, p2, p3) => {
+      return convertToHTML(p2)
+    }))
+  }
+  const inputHandler = function (e) {
+    replaceText(e.target.value)
+  }
 
-    const handleChangeWidth = function(e) {
-      imgSize = e.target.value
-      replaceText()
-    }
+  const handleChangeWidth = function (e) {
+    imgSize = e.target.value
+    replaceText(source.value)
+  }
 
-    source.addEventListener('input', inputHandler);
-    width.addEventListener('input', handleChangeWidth);
-  </script>
+  source.addEventListener('input', inputHandler)
+  width.addEventListener('input', handleChangeWidth)
+</script >
 
-</body>
+</body >
 
-</html>
+</html >
