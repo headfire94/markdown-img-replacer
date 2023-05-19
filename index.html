@@ -58,10 +58,12 @@
   const convertToHTML = url => `<img src="${url}" width=${imgSize} />`
 
   const replaceText = (value) => {
-    result.innerHTML = value.replace(/(!\[[^\]]+\]\((https?:\/\/.*\.(?:png|jpg|svg|gif|webp))\))/g, ((match, p1, p2, p3) => {
-      return convertToHTML(p2)
-    }))
-  }
+    result.innerHTML = value.replace(/(!\[[^\]]+\]\((https?:\/\/.*?)\))/g, (match, imageUrl) => {
+      const [, url] = imageUrl.match(/\((.*?)\)/)
+      return convertToHTML(url)
+    })
+  };
+
   const inputHandler = function (e) {
     replaceText(e.target.value)
   }
